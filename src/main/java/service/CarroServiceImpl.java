@@ -5,7 +5,15 @@ import model.Carro;
 public class CarroServiceImpl implements CarroService {
     @Override
     public void acelerar(Carro carro, int velocidadeAMais) {
-        carro.setVelocidadeAtual(carro.getVelocidadeAtual() + velocidadeAMais);
+        if (!carro.isLigado()){
+            System.out.println("O carro não está ligado");
+        } else {
+            if (carro.getVelocidadeMaxima() < carro.getVelocidadeAtual() + velocidadeAMais) {
+                carro.setVelocidadeAtual(carro.getVelocidadeMaxima());
+            } else {
+                carro.setVelocidadeAtual(carro.getVelocidadeAtual() + velocidadeAMais);
+            }
+        }
     }
 
     @Override
