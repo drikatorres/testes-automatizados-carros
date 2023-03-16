@@ -1,16 +1,37 @@
 package service;
 
 import model.Carro;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.*;
 
 public class CarroServiceTest {
     //Cada teste será em um método
 
+    CarroServiceImpl carroService;
+    @BeforeClass
+    public static void beforeClass () {
+        System.out.println("Before class");
+    }
+    //metodo executa antes de cada teste
+    @Before
+    public void before () {
+        carroService = new CarroServiceImpl();
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        System.out.println("After class");
+        //fechar
+    }
+
+    //método executa depois de cada tesste
+    @After
+    public void after () {
+        System.out.println("Fim do teste");
+    }
+
     @Test
     public void deveAcelerarCorretamenteUmCarroLigado() {
         //Given
-        CarroServiceImpl carroService = new CarroServiceImpl();
         Carro carro = new Carro();
         carroService.ligar(carro);
 
@@ -29,7 +50,6 @@ public class CarroServiceTest {
 
     @Test
     public void deveLigarCorretamente () {
-        CarroServiceImpl carroService1 = new CarroServiceImpl();
         Carro carro1 = new Carro();
         carro1.setLigado(true);
 
@@ -39,13 +59,12 @@ public class CarroServiceTest {
     @Test
     public void naoDeveUltrapassarAVelocidadeMaxima () {
         //Given
-        CarroServiceImpl carroService1 = new CarroServiceImpl();
         Carro carro1 = new Carro();
-        carroService1.ligar(carro1);
+        carroService.ligar(carro1);
         carro1.setVelocidadeAtual(220);
 
         //When
-        carroService1.acelerar(carro1, 10);
+        carroService.acelerar(carro1, 10);
 
         //Then
         Assert.assertEquals(carro1.getVelocidadeMaxima(), carro1.getVelocidadeAtual());
@@ -54,11 +73,10 @@ public class CarroServiceTest {
     @Test
     public void naoDeveAcelerarCarroDesligado () {
         //Given
-        CarroServiceImpl carroService1 = new CarroServiceImpl();
         Carro carro1 = new Carro();
 
         //When
-        carroService1.acelerar(carro1, 20);
+        carroService.acelerar(carro1, 20);
 
         //Then
         Assert.assertFalse(carro1.getVelocidadeAtual() == 20);
@@ -68,12 +86,11 @@ public class CarroServiceTest {
     @Test
     public void frearCarroParado () {
         //Given
-        CarroServiceImpl carroService1 = new CarroServiceImpl();
         Carro carro1 = new Carro();
-        carroService1.ligar(carro1);
+        carroService.ligar(carro1);
 
         //When
-        carroService1.frear(carro1, 10);
+        carroService.frear(carro1, 10);
 
         //Then
         Assert.assertTrue(carro1.getVelocidadeAtual() == 0);
@@ -82,11 +99,10 @@ public class CarroServiceTest {
     @Test
     public void DeveLigarCarro () {
         //Given
-        CarroServiceImpl carroService1 = new CarroServiceImpl();
         Carro carro1 = new Carro();
 
         //When
-        carroService1.ligar(carro1);
+        carroService.ligar(carro1);
 
         //Then
         Assert.assertTrue(carro1.isLigado());
@@ -95,12 +111,11 @@ public class CarroServiceTest {
     @Test
     public void desligarCarroLigado () {
         //Given
-        CarroServiceImpl carroService1 = new CarroServiceImpl();
         Carro carro1 = new Carro();
-        carroService1.ligar(carro1);
+        carroService.ligar(carro1);
 
         //When
-        carroService1.desligar(carro1);
+        carroService.desligar(carro1);
 
         //Then
         Assert.assertFalse(carro1.isLigado());
